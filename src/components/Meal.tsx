@@ -14,7 +14,6 @@ type MealsProps = {
 };
 
 export default function Meal({ meals }: MealsProps) {
-	console.log(meals);
 	return (
 		<li className='meal-item'>
 			<article>
