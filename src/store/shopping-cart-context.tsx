@@ -99,7 +99,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 		{ items: [] }
 	);
 
-	function handleAddItemToCart(id: string) {
+	function addItem(id: string) {
 		shoppingCartDispatch({
 			type: 'ADD_ITEM',
 			item: id, //było payload
@@ -118,9 +118,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
 	const ctx: CartContextValue = {
 		items: shoppingCartState.items,
-		addItemToCart: handleAddItemToCart,
+		addItemToCart: addItem,
 		updatedItemQuantity: handleUpdateCartItemQuantity,
 	};
+
+	console.log(ctx.items);
 
 	return <CartContext.Provider value={ctx}>{children}</CartContext.Provider>;
 }

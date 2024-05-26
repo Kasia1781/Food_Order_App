@@ -7,7 +7,6 @@ type MealsProps = MealProps;
 
 export default function Meals() {
 	const [loadedMeals, setLoadedMeals] = useState<MealsProps[]>([]);
-	console.log(loadedMeals);
 
 	useEffect(() => {
 		async function fetchMeal() {

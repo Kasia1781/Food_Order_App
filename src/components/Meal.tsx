@@ -1,12 +1,14 @@
+import { useCartContext } from '../store/shopping-cart-context.js';
 import { currencyFormatter } from '../util/formatting.js';
 import Button from './UI/Button.js';
 
 export type MealProps = {
-	id: number;
+	id: string;
 	name: string;
 	price: number;
 	description: string;
 	image: string;
+	quantity: number;
 };
 
 type MealsProps = {
@@ -14,6 +16,12 @@ type MealsProps = {
 };
 
 export default function Meal({ meals }: MealsProps) {
+	const { addItemToCart } = useCartContext();
+
+	function handleAddItemToCart() {
+		addItemToCart(meals);
+	}
+
 	return (
 		<li className='meal-item'>
 			<article>
@@ -26,7 +34,7 @@ export default function Meal({ meals }: MealsProps) {
 					<p className='meal-item-description'>{meals.description}</p>
 				</div>
 				<p className='meal-item-actions'>
-					<Button>Add to Cart</Button>
+					<Button onClick={() => handleAddItemToCart()}>Add to Cart</Button>
 				</p>
 			</article>
 		</li>
