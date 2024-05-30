@@ -3,14 +3,17 @@ import Cart from './components/Cart';
 import Header from './components/Header';
 import Meals from './components/Meals';
 import { CartContextProvider } from './store/shopping-cart-context';
+import { UserProgressContextProvider } from './store/UserProgressContext';
 
 function App() {
 	return (
-		<CartContextProvider>
-			<Header />
-			<Meals />
-			<Cart />
-		</CartContextProvider>
+		<UserProgressContextProvider>
+			<CartContextProvider>
+				<Header />
+				<Meals />
+				<Cart />
+			</CartContextProvider>
+		</UserProgressContextProvider>
 	);
 }
 
