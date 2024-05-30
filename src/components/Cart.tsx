@@ -7,10 +7,9 @@ import UserProgressContext from '../store/UserProgressContext.js';
 import CartItem from './CartItem.js';
 
 export default function Cart() {
-	const { items } = useCartContext();
+	const { items, addItemToCart, updatedItemQuantity } = useCartContext();
 	//const modal = useRef<ModalHandle>(null);
 	const { progress, hideCart } = useContext(UserProgressContext);
-	console.log(progress);
 
 	const cartTotal = items.reduce(
 		(totalPrice, item) => totalPrice + item.quantity * item.price,
@@ -26,10 +25,17 @@ export default function Cart() {
 			<h2>Your cart</h2>
 			<ul>
 				{items.map((item) => (
-					<CartItem key={item.id} {...item} />
+					<CartItem
+						key={item.id}
+						{...item}
+						onIncrease={() => addItemToCart(item)}
+						onDecrease={() => updatedItemQuantity(item.id, item.quantity)}
+					/>
 				))}
 			</ul>
-			<p className='cart-total'>Total: ${currencyFormatter.format(cartTotal)}</p>
+			<p className='cart-total'>
+				Total: ${currencyFormatter.format(cartTotal)}
+			</p>
 			<p className='modal-actions'>
 				<Button onClick={handleCloseCart} textOnly>
 					Close

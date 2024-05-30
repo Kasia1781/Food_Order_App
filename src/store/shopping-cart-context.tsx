@@ -1,5 +1,4 @@
 import { createContext, type ReactNode, useContext, useReducer } from 'react';
-import { DUMMY_PRODUCTS } from '/TypeScript_Git/shop_React-s_ContextAPI/src/dummy-products.js';
 
 type Item = {
 	id: string;
@@ -68,7 +67,7 @@ function shoppingCartReducer(state: CartState, action: Action): CartState {
 
 	if (action.type === 'UPDATE_ITEM') {
 		const existingCartItemIndex = state.items.findIndex(
-			(item) => item.id === action.item.id
+			(item) => item.id === action.id
 		);
 
 		const existingCartItem = state.items[existingCartItemIndex]; //pobieramy istniejący element koszyka
@@ -106,14 +105,18 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 		});
 	}
 
-	function handleUpdateCartItemQuantity(productId: string, amount: number) {
-		shoppingCartDispatch({
-			type: 'UPDATE_ITEM',
-			payload: {
-				productId,
-				amount,
-			},
-		});
+	// function handleUpdateCartItemQuantity(productId: string, amount: number) {
+	// 	shoppingCartDispatch({
+	// 		type: 'UPDATE_ITEM',
+	// 		payload: {
+	// 			productId,
+	// 			amount,
+	// 		},
+	// 	});
+	// }
+
+	function handleUpdateCartItemQuantity(id: string) {
+		shoppingCartDispatch({ type: 'UPDATE_ITEM', id });
 	}
 
 	const ctx: CartContextValue = {
