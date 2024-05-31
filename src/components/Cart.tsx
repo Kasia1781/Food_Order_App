@@ -1,5 +1,5 @@
-import { useContext, useRef } from 'react';
-import Modal, { ModalHandle } from './UI/Modal';
+import { useContext } from 'react';
+import Modal from './UI/Modal';
 import { useCartContext } from '../store/shopping-cart-context';
 import { currencyFormatter } from '../util/formatting.js';
 import Button from './UI/Button';
@@ -8,7 +8,7 @@ import CartItem from './CartItem.js';
 
 export default function Cart() {
 	const { items, addItemToCart, updatedItemQuantity } = useCartContext();
-	//const modal = useRef<ModalHandle>(null);
+	
 	const { progress, hideCart } = useContext(UserProgressContext);
 
 	const cartTotal = items.reduce(
@@ -40,7 +40,7 @@ export default function Cart() {
 				<Button onClick={handleCloseCart} textOnly>
 					Close
 				</Button>
-				<Button>Go to Checkout</Button>
+				{items.length > 0 && <Button>Go to Checkout</Button>}
 			</p>
 		</Modal>
 	);
