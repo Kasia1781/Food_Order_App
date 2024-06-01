@@ -3,7 +3,7 @@ import { currencyFormatter } from '../util/formatting.js';
 import { useCartContext } from '../store/shopping-cart-context';
 import Input from './UI/Input.js';
 import Button from './UI/Button.js';
-import { useContext } from 'react';
+import { FormEvent, useContext } from 'react';
 import UserProgressContext from '../store/UserProgressContext.js';
 
 export default function Checkout() {
@@ -19,9 +19,18 @@ export default function Checkout() {
 		hideCheckout();
 	}
 
+	function handleSubmit(event: FormEvent<HTMLFormElement>) {
+		event?.preventDefault();
+
+		const fd = new FormData(event.currentTarget);
+
+		const customerData = Object.fromEntries(fd.entries());
+		console.log(customerData);
+	}
+
 	return (
 		<Modal open={progress === 'checkout'} onClose={handleClose}>
-			<form>
+			<form onSubmit={handleSubmit}>
 				<h2>Checkout</h2>
 				<p>Total Amount: {currencyFormatter.format(cartTotal)}</p>
 				<Input label='Full name' type='text' id='full-name' />
