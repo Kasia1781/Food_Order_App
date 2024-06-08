@@ -14,3 +14,12 @@ async function sendHttpRequest(url: string, config: string) {
 }
 
 export default sendHttpRequest;
+
+export default function useHttp() {
+	//funkcja sendRequest() służy do aktualizacji stanu w oparciu o status żądania.
+	async function sendRequest() {
+		try {
+			const resData = sendHttpRequest(); //wywołuję funkcję pomocniczą
+		} catch (error) {}
+	}
+}
