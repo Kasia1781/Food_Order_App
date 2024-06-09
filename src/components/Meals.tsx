@@ -1,32 +1,10 @@
-import { useEffect, useState } from 'react';
-import { fetchMeals } from '../util/http';
-import Meal, { MealProps } from './Meal';
+import Meal from './Meal';
+import Error from './Error';
 import useHttp from '../hooks/useHttp';
 
 const requestConfig = {};
 
-//typujemy dane które otrzymujemy z API
-//type MealsProps = MealProps;
-
 export default function Meals() {
-	// const [loadedMeals, setLoadedMeals] = useState<MealsProps[]>([]);
-
-	// useEffect(() => {
-	// 	async function fetchMeal() {
-	// 		try {
-	// 			const meals = await fetchMeals('http://localhost:3000/meals');
-	// 			setLoadedMeals(meals);
-	// 		} catch (error) {
-	// 			console.error('Błąd przy pobieraniu posiłków:', error);
-	// 		}
-	// 	}
-	// 	fetchMeal();
-	// }, []);
-
-	// if (loadedMeals.length === 0) {
-	// 	return <p>Pobieranie danych...</p>;
-	// }
-
 	const {
 		data: loadedMeals,
 		isLoading,
@@ -35,6 +13,10 @@ export default function Meals() {
 
 	if (isLoading) {
 		return <p className='center'>Fetching meals...</p>;
+	}
+
+	if (error) {
+		return <Error title='Failed to fetch meals' message={error} />;
 	}
 
 	return (

@@ -5,7 +5,7 @@ type ErrorProps = {
 
 export default function Error({ title, message }: ErrorProps) {
 	return (
-		<div className='error'>
+		<div>
 			<h2>{title}</h2>
 			<p>{message}</p>
 		</div>
