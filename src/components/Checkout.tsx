@@ -5,10 +5,23 @@ import Input from './UI/Input.js';
 import Button from './UI/Button.js';
 import { FormEvent, useContext } from 'react';
 import UserProgressContext from '../store/UserProgressContext.js';
+import useHttp from '../hooks/useHttp.js';
+
+const requestConfig = {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+};
 
 export default function Checkout() {
 	const { items } = useCartContext();
 	const { hideCheckout, progress } = useContext(UserProgressContext);
+
+	const { data, error, isLoading, sendRequest } = useHttp(
+		'http://localhost:3000/orders',
+		requestConfig
+	);
 
 	const cartTotal = items.reduce(
 		(totalPrice, item) => totalPrice + item.quantity * item.price,
@@ -28,18 +41,40 @@ export default function Checkout() {
 		console.log(customerData);
 
 		//przesyłanie danych na backend
-		fetch('http://localhost:3000/orders', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
+		// fetch('http://localhost:3000/orders', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 	},
+		// 	body: JSON.stringify({
+		// 		order: {
+		// 			items: items,
+		// 			customer: customerData,
+		// 		},
+		// 	}),
+		// });
+
+		sendRequest(
+			JSON.stringify({
 				order: {
 					items: items,
 					customer: customerData,
 				},
-			}),
-		});
+			})
+		);
+	}
+
+	let actions = (
+		<>
+			<Button onClick={handleClose} type='button' textOnly>
+				Close
+			</Button>
+			<Button>Submit Order</Button>
+		</>
+	);
+
+	if (isLoading) {
+		actions = <span>Sending order data...</span>;
 	}
 
 	return (
@@ -54,12 +89,7 @@ export default function Checkout() {
 					<Input label='Postal Code' type='text' id='postal-code' />
 					<Input label='City' type='text' id='city' />
 				</div>
-				<p className='modal-actions'>
-					<Button onClick={handleClose} type='button' textOnly>
-						Close
-					</Button>
-					<Button>Submit Order</Button>
-				</p>
+				<p className='modal-actions'>{actions}</p>
 			</form>
 		</Modal>
 	);

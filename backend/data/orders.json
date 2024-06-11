@@ -17,26 +17,6 @@
 			"postal-code": "333333",
 			"city": "Krakow"
 		},
-		"id": "211.9206205570696"
-	},
-	{
-		"items": [
-			{
-				"id": "m5",
-				"name": "Veggie Burger",
-				"price": "9.99",
-				"description": "A juicy veggie patty served on a whole grain bun with lettuce, tomato, and a tangy sauce.",
-				"image": "images/veggie-burger.jpg",
-				"quantity": 2
-			}
-		],
-		"customer": {
-			"name": "Kate",
-			"email": "test@test.com",
-			"street": "Mała",
-			"postal-code": "333333",
-			"city": "Krakow"
-		},
-		"id": "462.27513587073156"
+		"id": "747.950196001157"
 	}
 ]
