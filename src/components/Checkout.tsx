@@ -6,6 +6,7 @@ import Button from './UI/Button.js';
 import { FormEvent, useContext } from 'react';
 import UserProgressContext from '../store/UserProgressContext.js';
 import useHttp from '../hooks/useHttp.js';
+import Error from './Error.js';
 
 const requestConfig = {
 	method: 'POST',
@@ -19,9 +20,11 @@ export default function Checkout() {
 	const { hideCheckout, progress } = useContext(UserProgressContext);
 
 	const { data, error, isLoading, sendRequest } = useHttp(
-		'http://localhost:3000/orders',
+		'http://localhost:3000/orderss',
 		requestConfig
 	);
+	console.log(data);
+	console.log(error);
 
 	const cartTotal = items.reduce(
 		(totalPrice, item) => totalPrice + item.quantity * item.price,
@@ -89,6 +92,7 @@ export default function Checkout() {
 					<Input label='Postal Code' type='text' id='postal-code' />
 					<Input label='City' type='text' id='city' />
 				</div>
+				{error && <Error title='Filed to submit order' message={error} />}
 				<p className='modal-actions'>{actions}</p>
 			</form>
 		</Modal>
