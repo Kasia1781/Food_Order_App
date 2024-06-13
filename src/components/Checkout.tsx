@@ -20,7 +20,7 @@ export default function Checkout() {
 	const { hideCheckout, progress } = useContext(UserProgressContext);
 
 	const { data, error, isLoading, sendRequest } = useHttp(
-		'http://localhost:3000/orderss',
+		'http://localhost:3000/orders',
 		requestConfig
 	);
 	console.log(data);
@@ -78,6 +78,22 @@ export default function Checkout() {
 
 	if (isLoading) {
 		actions = <span>Sending order data...</span>;
+	}
+
+	if (data && !error) {
+		return (
+			<Modal open={progress === 'checkout'} onClose={handleClose}>
+				<h2>Success!</h2>
+				<p>Your order was submitted successfully!</p>
+				<p>
+					We will get back to you with more deatails via email within the next
+					few minutes.
+				</p>
+				<p className='modal-actions'>
+					<Button onClick={handleClose}>Okay</Button>
+				</p>
+			</Modal>
+		);
 	}
 
 	return (

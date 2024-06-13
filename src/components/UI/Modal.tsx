@@ -8,7 +8,7 @@ export type ModalHandle = {
 
 type ModalProps = {
 	children: ReactNode;
-	className: string;
+	className?: string;
 	onClose: () => void;
 	open: boolean;
 };
