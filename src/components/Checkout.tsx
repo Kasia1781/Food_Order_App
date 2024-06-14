@@ -16,15 +16,13 @@ const requestConfig = {
 };
 
 export default function Checkout() {
-	const { items } = useCartContext();
+	const { items, clearCart } = useCartContext();
 	const { hideCheckout, progress } = useContext(UserProgressContext);
 
-	const { data, error, isLoading, sendRequest } = useHttp(
+	const { data, error, isLoading, sendRequest, clearData } = useHttp(
 		'http://localhost:3000/orders',
 		requestConfig
 	);
-	console.log(data);
-	console.log(error);
 
 	const cartTotal = items.reduce(
 		(totalPrice, item) => totalPrice + item.quantity * item.price,
@@ -80,7 +78,11 @@ export default function Checkout() {
 		actions = <span>Sending order data...</span>;
 	}
 
-	
+	function handleFinish() {
+		hideCheckout();
+		clearCart();
+		clearData();
+	}
 
 	if (data && !error) {
 		return (
@@ -92,7 +94,7 @@ export default function Checkout() {
 					few minutes.
 				</p>
 				<p className='modal-actions'>
-					<Button onClick={handleClose}>Okay</Button>
+					<Button onClick={handleFinish}>Okay</Button>
 				</p>
 			</Modal>
 		);
