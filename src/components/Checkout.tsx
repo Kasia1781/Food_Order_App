@@ -80,6 +80,8 @@ export default function Checkout() {
 		actions = <span>Sending order data...</span>;
 	}
 
+	
+
 	if (data && !error) {
 		return (
 			<Modal open={progress === 'checkout'} onClose={handleClose}>

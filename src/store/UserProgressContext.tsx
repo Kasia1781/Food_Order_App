@@ -30,7 +30,6 @@ export function UserProgressContextProvider({
 	const [userProgress, setUserProgress] = useState<'cart' | 'checkout' | ''>(
 		''
 	);
-	
 
 	function showCart() {
 		setUserProgress('cart');

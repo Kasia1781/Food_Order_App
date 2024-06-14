@@ -16,6 +16,7 @@ type CartState = {
 type CartContextValue = CartState & {
 	addItemToCart: (item: Item) => void;
 	updatedItemQuantity: (itemId: string, quantity: number) => void;
+	clearCart: () => void;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -38,7 +39,11 @@ type UpdateItemAction = {
 	type: 'UPDATE_ITEM';
 };
 
-type Action = AddItemAction | UpdateItemAction;
+type ClearCart = {
+	type: 'CLEAR_CART';
+};
+
+type Action = AddItemAction | UpdateItemAction | ClearCart;
 
 function shoppingCartReducer(state: CartState, action: Action): CartState {
 	if (action.type === 'ADD_ITEM') {
@@ -85,6 +90,11 @@ function shoppingCartReducer(state: CartState, action: Action): CartState {
 		}
 		return { ...state, items: updatedItems };
 	}
+
+	if (action.type === 'CLEAR_CART') {
+		return { ...state, items: [] };
+	}
+
 	return state;
 }
 
@@ -119,10 +129,15 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 		shoppingCartDispatch({ type: 'UPDATE_ITEM', id });
 	}
 
+	function clearCart() {
+		shoppingCartDispatch({ type: 'CLEAR_CART' });
+	}
+
 	const ctx: CartContextValue = {
 		items: shoppingCartState.items,
 		addItemToCart: addItem,
 		updatedItemQuantity: handleUpdateCartItemQuantity,
+		clearCart,
 	};
 
 	console.log(ctx.items);
